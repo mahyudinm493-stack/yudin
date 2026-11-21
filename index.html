@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Wedding of Andi Indah &amp; Baso' Akbar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #16090b;
+      --bg-cream: #faf6f0;
+      --surface: #ffffff;
+      --maroon: #5e171e;
+      --maroon-deep: #380b10;
+      --gold: #c69b53;
+      --gold-light: #edd39e;
+      --ink: #241916;
+      --muted: #6c5d56;
+      --border-gold: rgba(198, 155, 83, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-cream);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    .display-font {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.06em;
+    }
+
+    h1, h2, h3, .serif {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+    }
+
+    /* =========================================================================
+       1. SAMPUL PEMBUKA (FULL-SCREEN PHOTO COVER)
+       ========================================================================= */
+    .cover-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      transition: transform 0.95s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.85s ease;
+    }
+
+    .cover-screen.opened {
+      transform: translateY(-105%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cover-bg {
+      position: absolute;
+      inset: 0;
+      background: url('3.jpg') center 18% / cover no-repeat;
+      transform: scale(1.06);
+      animation: coverSlowZoom 14s ease-in-out infinite alternate;
+      filter: brightness(0.55) contrast(1.06);
+    }
+
+    @keyframes coverSlowZoom {
+      from { transform: scale(1.03); }
+      to { transform: scale(1.13); }
+    }
+
+    .cover-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(56, 11, 16, 0.32) 0%, rgba(18, 6, 8, 0.88) 100%),
+        linear-gradient(to top, rgba(18, 6, 8, 0.95) 0%, transparent 45%, rgba(18, 6, 8, 0.72) 100%);
+    }
+
+    .cover-frame {
+      position: relative;
+      z-index: 2;
+      width: min(90vw, 560px);
+      padding: 40px 26px;
+      border: 1px solid rgba(237, 211, 158, 0.45);
+      border-radius: 220px 220px 24px 24px;
+      background: rgba(24, 8, 10, 0.42);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 5px rgba(198, 155, 83, 0.12);
+    }
+
+    .cover-sub {
+      font-size: 0.74rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+    }
+
+    .cover-title {
+      font-size: clamp(2rem, 5.5vw, 3.2rem);
+      line-height: 1.15;
+      color: #fff;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .cover-amp {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.78em;
+      color: var(--gold-light);
+      margin: 4px 0;
+    }
+
+    .cover-date {
+      margin-top: 18px;
+      font-size: 0.92rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f6e7ca;
+    }
+
+    .open-btn {
+      margin-top: 28px;
+      padding: 13px 30px;
+      border-radius: 999px;
+      border: 1px solid var(--gold-light);
+      background: linear-gradient(135deg, #b8893d 0%, #8a5e1e 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .open-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(198, 155, 83, 0.35);
+    }
+
+    /* =========================================================================
+       2. HERO BANNER UTAMA (DENGAN FOTO LATAR)
+       ========================================================================= */
+    .hero-banner {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 72px 20px;
+      color: #fff;
+      overflow: hidden;
+      background: var(--maroon-deep);
+    }
+
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('5.jpg') center 18% / cover no-repeat;
+      opacity: 0.34;
+      transform: scale(1.04);
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(38, 8, 12, 0.72) 0%,
+        rgba(56, 11, 16, 0.78) 60%,
+        var(--bg-cream) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    .bismillah {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.2rem, 5.5vw, 3.85rem);
+      line-height: 1.14;
+      color: #fff;
+    }
+
+    .hero-content .amp-gold {
+      display: block;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.74em;
+      margin: 6px 0;
+    }
+
+    .hero-quote {
+      margin: 22px auto 0;
+      max-width: 580px;
+      font-size: 0.94rem;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    /* Countdown */
+    .countdown-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(64px, 92px));
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .cd-box {
+      background: rgba(22, 7, 9, 0.58);
+      border: 1px solid rgba(237, 211, 158, 0.4);
+      border-radius: 14px;
+      padding: 12px 8px;
+      backdrop-filter: blur(4px);
+    }
+
+    .cd-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+
+    .cd-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-block {
+      padding: 58px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .section-kicker {
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4.4vw, 2.9rem);
+      color: var(--maroon);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* =========================================================================
+       3. PROFIL MEMPELAI BERDAMPINGAN
+       ========================================================================= */
+    .couple-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 24px;
+    }
+
+    .person-card {
+      background: var(--surface);
+      border: 1px solid var(--border-gold);
+      border-radius: 22px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(56, 11, 16, 0.06);
+    }
+
+    .person-avatar {
+      width: 148px;
+      height: 184px;
+      margin: 0 auto 18px;
+      border-radius: 90px 90px 18px 18px;
+      overflow: hidden;
+      border: 3px solid var(--gold);
+      box-shadow: 0 10px 24px rgba(56, 11, 16, 0.14);
+    }
+
+    .person-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+    }
+
+    .person-card h3 {
+      font-size: 1.65rem;
+      color: var(--maroon);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .person-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* =========================================================================
+       4. WAKTU & TEMPAT ACARA + GOOGLE MAPS
+       ========================================================================= */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .event-card {
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #fcf8f2 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 22px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 14px 34px rgba(56, 11, 16, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .event-card h3 {
+      font-size: 1.85rem;
+      color: var(--maroon);
+      margin-bottom: 10px;
+    }
+
+    .event-card p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-deep) 100%);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      box-shadow: 0 8px 20px rgba(94, 23, 30, 0.22);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    /* =========================================================================
+       5. GALERI FOTO PENUH VARIASI + TEKS MELUNCUR KE ATAS FOTO
+       ========================================================================= */
+    .story-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 52px;
+    }
+
+    .photo-story-card {
+      position: relative;
+      overflow: hidden;
+      background: #1a0b0d;
+      min-height: 510px;
+      box-shadow: 0 22px 50px rgba(36, 16, 18, 0.16);
+      --lift: 64px;
+      --fade: 0.15;
+      --p: 0;
+      --img-scale: 1.06;
+      --img-x: 0%;
+      --img-rot: 0deg;
+    }
+
+    .photo-story-card[data-frame="arch"] {
+      border-radius: 190px 190px 26px 26px;
+      border: 2px solid var(--gold);
+    }
+
+    .photo-story-card[data-frame="bevel"] {
+      border-radius: 42px 8px 42px 8px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .photo-story-card[data-frame="classic"] {
+      border-radius: 26px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .photo-story-card[data-frame="reverse-bevel"] {
+      border-radius: 8px 42px 8px 42px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .photo-story-card[data-frame="double-border"] {
+      border-radius: 28px;
+      padding: 10px;
+      background: linear-gradient(135deg, #4b1218, #24080b);
+      border: 1px solid var(--gold);
+    }
+
+    .photo-story-card[data-frame="double-border"] img {
+      border-radius: 20px;
+    }
+
+    .photo-story-card[data-frame="royal-pill"] {
+      border-radius: 34px;
+      border: 2px solid rgba(198, 155, 83, 0.55);
+    }
+
+    .photo-story-card[data-variant="zoom-in"] {
+      --img-scale: calc(1.03 + var(--p) * 0.11);
+    }
+
+    .photo-story-card[data-variant="pan-right"] {
+      --img-scale: 1.13;
+      --img-x: calc(-4% + var(--p) * 7%);
+    }
+
+    .photo-story-card[data-variant="tilt-soft"] {
+      --img-scale: 1.10;
+      --img-rot: calc(-1.3deg + var(--p) * 2.6deg);
+    }
+
+    .photo-story-card[data-variant="zoom-out"] {
+      --img-scale: calc(1.16 - var(--p) * 0.11);
+    }
+
+    .photo-story-card[data-variant="pan-left"] {
+      --img-scale: 1.13;
+      --img-x: calc(4% - var(--p) * 7%);
+    }
+
+    .photo-story-card[data-variant="zoom-tilt"] {
+      --img-scale: calc(1.04 + var(--p) * 0.09);
+      --img-rot: calc(1.1deg - var(--p) * 2.2deg);
+    }
+
+    .photo-story-card img {
+      width: 100%;
+      height: 570px;
+      object-fit: cover;
+      object-position: center 18%;
+      display: block;
+      transform: translateX(var(--img-x)) scale(var(--img-scale)) rotate(var(--img-rot));
+      transition: transform 0.18s ease-out;
+      will-change: transform;
+    }
+
+    .photo-story-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(20, 7, 9, 0.94) 0%,
+        rgba(20, 7, 9, 0.56) 46%,
+        rgba(20, 7, 9, 0.06) 100%
+      );
+      pointer-events: none;
+    }
+
+    .overlay-text {
+      position: relative;
+      z-index: 2;
+      margin-top: -215px;
+      padding: 28px 28px 32px;
+      color: #fff;
+      transform: translateY(var(--lift));
+      opacity: var(--fade);
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease-out;
+      will-change: transform, opacity;
+    }
+
+    .photo-story-card[data-align="left-ribbon"] .overlay-text {
+      text-align: left;
+      max-width: 92%;
+    }
+
+    .photo-story-card[data-align="center-badge"] .overlay-text {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 88%;
+    }
+
+    .photo-story-card[data-align="glass-editorial"] .overlay-text {
+      text-align: left;
+      margin-left: 22px;
+      margin-right: 22px;
+      padding: 20px 22px;
+      border-left: 4px solid var(--gold-light);
+      background: rgba(34, 10, 14, 0.55);
+      backdrop-filter: blur(6px);
+      border-radius: 0 18px 18px 0;
+    }
+
+    .photo-story-card[data-align="right-ornament"] .overlay-text {
+      text-align: right;
+      margin-left: auto;
+      max-width: 92%;
+      border-right: 3px solid var(--gold-light);
+      padding-right: 22px;
+    }
+
+    .photo-story-card[data-align="gold-card"] .overlay-text {
+      text-align: center;
+      margin-left: 22px;
+      margin-right: 22px;
+      padding: 20px 22px;
+      border: 1px solid rgba(237, 211, 158, 0.55);
+      background: rgba(26, 8, 11, 0.58);
+      backdrop-filter: blur(6px);
+      border-radius: 18px;
+    }
+
+    .photo-story-card[data-align="closing-crest"] .overlay-text {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 90%;
+      padding-top: 22px;
+      border-top: 1px solid rgba(237, 211, 158, 0.45);
+    }
+
+    .tag-pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(198, 155, 83, 0.24);
+      border: 1px solid rgba(237, 211, 158, 0.45);
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .overlay-text h3 {
+      font-size: clamp(1.55rem, 3.6vw, 2.25rem);
+      line-height: 1.18;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .quote-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.38rem);
+      line-height: 1.45;
+      color: #faeed9;
+      margin-bottom: 6px;
+    }
+
+    .note-line {
+      font-size: 0.87rem;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    /* =========================================================================
+       6. KELUARGA BESAR & TURUT MENGUNDANG
+       ========================================================================= */
+    .family-box {
+      background: var(--surface);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      padding: 36px 24px;
+      box-shadow: 0 14px 36px rgba(56, 11, 16, 0.05);
+    }
+
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      margin-bottom: 30px;
+    }
+
+    .family-col h3 {
+      font-size: 1.6rem;
+      color: var(--maroon);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .family-list {
+      list-style: none;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .family-list li {
+      margin-bottom: 5px;
+    }
+
+    .turut-box {
+      border-top: 1px solid var(--border-gold);
+      padding-top: 26px;
+      text-align: center;
+    }
+
+    .turut-box h3 {
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    footer {
+      background: var(--maroon-deep);
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+      padding: 56px 20px 68px;
+      margin-top: 28px;
+    }
+
+    footer p {
+      max-width: 560px;
+      margin: 0 auto;
+      font-size: 0.92rem;
+    }
+
+    .closing-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 4vw, 2.45rem);
+      color: var(--gold-light);
+      margin-top: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .cover-frame {
+        padding: 32px 18px;
+        border-radius: 150px 150px 20px 20px;
+      }
+
+      .photo-story-card,
+      .photo-story-card img {
+        min-height: 450px;
+        height: 470px;
+      }
+
+      .photo-story-card[data-frame="arch"] {
+        border-radius: 135px 135px 22px 22px;
+      }
+
+      .overlay-text {
+        margin-top: -195px;
+        padding: 20px 16px 24px;
+      }
+
+      .photo-story-card[data-align="glass-editorial"] .overlay-text,
+      .photo-story-card[data-align="gold-card"] .overlay-text {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 15px 16px;
+      }
+    }
+  </style>
+</head>
+<body class="locked">
+
+  <section class="cover-screen" id="coverScreen" aria-label="Sampul Undangan Pernikahan">
+    <div class="cover-bg"></div>
+    <div class="cover-overlay"></div>
+    <div class="cover-frame">
+      <div class="cover-sub">Undangan Pernikahan</div>
+      <h2 class="cover-title display-font">
+        Andi Indah
+        <span class="cover-amp">&amp;</span>
+        Baso' Akbar
+      </h2>
+      <div class="cover-date">Senin · 18 Januari 2027</div>
+      <button type="button" class="open-btn" id="openInvitationBtn">
+        Buka Undangan
+      </button>
+    </div>
+  </section>
+
+  <header class="hero-banner">
+    <div class="hero-content">
+      <div class="bismillah">Bismillahirrahmanirrahim</div>
+      <h1>
+        Andi Indah Salsabillah Putri
+        <span class="amp-gold">&amp;</span>
+        Baso' Muhammad Nuruddin Akbar, S.Pi
+      </h1>
+      <p class="hero-quote">
+        “Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya.”
+      </p>
+
+      <div class="countdown-wrap" aria-label="Hitung Mundur Acara">
+        <div class="cd-box">
+          <div class="cd-num" id="cdDays">00</div>
+          <div class="cd-label">Hari</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cdHours">00</div>
+          <div class="cd-label">Jam</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cdMinutes">00</div>
+          <div class="cd-label">Menit</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cdSeconds">00</div>
+          <div class="cd-label">Detik</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section-block">
+      <div class="section-header">
+        <div class="section-kicker">Assalamu'alaikum Wr. Wb.</div>
+        <h2>Mempelai Berbahagia</h2>
+        <p>Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:</p>
+      </div>
+
+      <div class="couple-grid">
+        <div class="person-card">
+          <div class="person-avatar">
+            <img src="1.jpg" alt="Andi Indah Salsabillah Putri" />
+          </div>
+          <h3>Andi Indah Salsabillah Putri</h3>
+          <p>Putri pertama dari<br /><strong>Bapak H. Ambo Lolo &amp; Ibu Hj. Andi Elis</strong></p>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">
+            <img src="2.jpg" alt="Baso' Muhammad Nuruddin Akbar, S.Pi" />
+          </div>
+          <h3>Baso' Muhammad Nuruddin Akbar, S.Pi</h3>
+          <p>Putra pertama dari<br /><strong>Bapak H. Basok Mappasessuk &amp; Ibu Hj. Besse' Rosdiana</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="acara">
+      <div class="section-header">
+        <div class="section-kicker">Save The Date</div>
+        <h2>Rangkaian Acara</h2>
+        <p>Merupakan suatu kehormatan bagi kami apabila Bapak/Ibu/Saudara
